@@ -11,7 +11,8 @@ import TripController from './controllers/trip-controller';
 import TripCostComponent from './components/trip-cost';
 import TripInfoComponent from './components/trip-info';
 
-const AUTHORIZATION = `Basic eWnlckBwYfvbd29yZAo=`;
+const AUTHORIZATION = `Basic eWnlckBwYfvbf59yZAo=`;
+const END_POINT = `https://11.ecmascript.pages.academy/big-trip/`;
 const SiteTabs = {
   TABLE: `Table`,
   STATS: `Stats`,
@@ -22,7 +23,7 @@ const tripControlsElement = document.querySelector(`.trip-controls`);
 const menuHeaderElement = tripControlsElement.querySelector(`h2`);
 const eventsContainerElement = document.querySelector(`.page-main .page-body__container`);
 
-const api = new API(AUTHORIZATION);
+const api = new API(END_POINT, AUTHORIZATION);
 const menuComponent = new MenuComponent();
 const eventsComponent = new EventsComponent();
 const newEventButtonComponent = new NewEventButtonComponent();
@@ -44,7 +45,7 @@ api.getOffers()
     .then((response) => {
       destinations = response;
     })
-    .then(() => api.getTasks(allOffers, destinations))
+    .then(() => api.getPoints(allOffers, destinations))
     .then((points) => {
       eventsContainerElement.innerHTML = ``;
       render(eventsContainerElement, eventsComponent, RenderPosition.BEFOREEND);
@@ -53,7 +54,9 @@ api.getOffers()
 
       const tripInfoComponent = new TripInfoComponent(pointsModel.getAllPoints());
       const tripCostComponent = new TripCostComponent(pointsModel.getAllPoints());
-      const tripController = new TripController(eventsComponent, pointsModel, tripInfoComponent, tripCostComponent, newEventButtonComponent, filterController);
+      const tripController = new TripController(eventsComponent, pointsModel, tripInfoComponent, tripCostComponent, newEventButtonComponent, filterController, api);
+      tripController.setAllOffers(allOffers);
+      tripController.setDetinations(destinations);
 
       filterController.render();
       render(tripInfoElement, tripInfoComponent, RenderPosition.AFTERBEGIN);

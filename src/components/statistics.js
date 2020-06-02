@@ -5,7 +5,7 @@ import {isActivitys, calculateTotalCost} from '../utils/common';
 
 const BAR_HEIGHT = 55;
 
-const Emoji = {
+const EmojiMap = {
   taxi: `🚕`,
   bus: `🚌`,
   train: `🚂`,
@@ -86,9 +86,9 @@ const renderMoneyChart = (moneyCtx, points) => {
 
   const labels = sortedTypes.map((it)=>{
     if (it === `check-in`) {
-      return `${Emoji[`check`]} ${it.toUpperCase()}`;
+      return `${EmojiMap[`check`]} ${it.toUpperCase()}`;
     }
-    return `${Emoji[it]} ${it.toUpperCase()}`;
+    return `${EmojiMap[it]} ${it.toUpperCase()}`;
   });
 
   return new Chart(moneyCtx, {
@@ -173,9 +173,9 @@ const renderTransportChart = (transportCtx, points) => {
 
   const labels = sortedTypes.map((it) => {
     if (it === `check-in`) {
-      return `${Emoji[`check`]} ${it.toUpperCase()}`;
+      return `${EmojiMap[`check`]} ${it.toUpperCase()}`;
     }
-    return `${Emoji[it]} ${it.toUpperCase()}`;
+    return `${EmojiMap[it]} ${it.toUpperCase()}`;
   });
 
   return new Chart(transportCtx, {
@@ -253,9 +253,9 @@ const renderTimeChart = (timeCtx, points) => {
 
   const labels = points.map((it) => {
     if (it.type === `check-in`) {
-      return `${Emoji[`check`]} ${it.type.toUpperCase()} ${it.destination.toUpperCase()}`;
+      return `${EmojiMap[`check`]} ${it.type.toUpperCase()} ${it.destination.toUpperCase()}`;
     }
-    return `${Emoji[it.type]} ${it.type.toUpperCase()} ${isActivitys(it.type) ? `IN ` : `TO `}${it.destination.toUpperCase()}`;
+    return `${EmojiMap[it.type]} ${it.type.toUpperCase()} ${isActivitys(it.type) ? `IN ` : `TO `}${it.destination.toUpperCase()}`;
   });
 
   return new Chart(timeCtx, {
